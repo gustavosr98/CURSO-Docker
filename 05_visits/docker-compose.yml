@@ -1,0 +1,10 @@
+version: "3"
+services:
+  redis-servidor: # Type of container X
+    image: "redis" # From image
+  node-api:
+    build: . # Searchs on path . a Dockerfile to build from
+    ports:
+      - "8081:8081" # local:container
+
+    # NOTE - Both services are going to be autocatically created inside the same network
