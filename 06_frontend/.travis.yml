@@ -1,0 +1,30 @@
+sudo: required
+# Because we are using docker and it needs sudo privilege
+
+services:
+  - docker
+  # Travis install a copy of docker
+
+before_install:
+  - docker build -t stephengrider/docker-react -f Dockerfile.dev .
+  # Test container build
+
+script:
+  - docker run -e CI=true stephengrider/docker-react npm run test -- --coverage
+  # Excute tests. It should return exit status 0 to be considered ok.
+# To deploy
+
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-west-2"
+#   app: "docker"
+#   env: "Docker-env"
+#   bucket_name: "elasticbeanstalk-us-west-2-306476627547"
+#   bucket_path: "docker"
+#   on:
+#     branch: master
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key:
+#     secure: "$AWS_SECRET_KEY"
+
+# $VAR are variables stored in the environment of Travis-ci.org
